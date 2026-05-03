@@ -29,7 +29,7 @@ requirements:
     - distro >=1.7.0,<2
     - sniffio
   run_constrained:
-    # aiohttp extra (https://github.com/openai/openai-python; mirrored by groq)
+    # [aiohttp] extra (https://github.com/groq/groq-python/blob/v1.2.0/pyproject.toml)
     - aiohttp
     - httpx-aiohttp >=0.1.9
 
