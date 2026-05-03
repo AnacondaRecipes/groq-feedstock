@@ -1,0 +1,60 @@
+{% set name = "groq" %}
+{% set version = "1.2.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 85459e27c9c17f22404349c785cd08680362cfe85e07cc060be46c4832f108c3
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  skip: true  # [py<310]
+
+requirements:
+  host:
+    - python
+    - pip
+    - hatchling
+    - hatch-fancy-pypi-readme
+  run:
+    - python
+    - typing_extensions >=4.14,<5
+    - httpx >=0.23.0,<1
+    - pydantic >=1.9.0,<3
+    - anyio >=3.5.0,<5
+    - distro >=1.7.0,<2
+    - sniffio
+  run_constrained:
+    # aiohttp extra (https://github.com/openai/openai-python; mirrored by groq)
+    - aiohttp
+    - httpx-aiohttp >=0.1.9
+
+test:
+  imports:
+    - groq
+  requires:
+    - pip
+  commands:
+    - pip check
+
+about:
+  home: https://console.groq.com/docs/quickstart
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  summary: The official Python library for the groq API
+  description: |
+    The Groq Python library provides convenient access to the Groq REST API
+    from any Python 3.10+ application, with both synchronous and async
+    clients powered by httpx.
+  doc_url: https://console.groq.com/docs
+  dev_url: https://github.com/groq/groq-python
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - xkong-anaconda
